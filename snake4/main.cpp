@@ -78,36 +78,19 @@ int main() {
 		return 0;
 	}
 	while (game_on)
-	{
-		std::cout << "\nInsert symbol for determining the direction: right(->) or left(<-)";
+	
+	std::cout << "\nInsert symbol for determining the direction: right(->) or left(<-)";
 
 #ifdef AUTOMATIC   
-
-		if (_kbhit())
-		{
-			user_case = _getch();
-			if (user_case == 27)
-			{
-				game_on = false;
-				break;
-			}
-			else if (user_case != 224)
-			{
-				std::cout << "Incorrect symbol";
-			}
-			else
-			{
-				user_case = _getch();
-			}
-		}
-#else
+	
+	if (_kbhit())
+	{
 		user_case = _getch();
 		if (user_case == 27)
 		{
 			game_on = false;
-			break;
 		}
-		else if (user_case != 224)
+		else if(user_case!=224)
 		{
 			std::cout << "Incorrect symbol";
 		}
@@ -115,82 +98,97 @@ int main() {
 		{
 			user_case = _getch();
 		}
-#endif
-
-		switch (user_case)
-		{
-		case DIRECTION::RIGHT_dir:
-			game_on = true;
-			break;
-		case DIRECTION::LEFT_dir:
-			game_on = true;
-			break;
-		default:
-			break;
-		}
-
-		for (size_t i = snake_size - 1; i > 0; i--)
-		{
-			snake_x[i] = snake_x[i - 1];
-		}
-
-		if (user_case == DIRECTION::RIGHT_dir)
-		{
-			snake_x[0]++;
-			if (snake_x[0] >= columns - 1)
-			{
-				snake_x[0] = 1;
-			}
-		}
-
-		if (user_case == DIRECTION::LEFT_dir)
-		{
-			snake_x[0]--;
-			if (snake_x[0] < 1)
-			{
-				snake_x[0] = columns - 1;
-			}
-		}
-
-		if (!food_flag)
-		{
-			do
-			{
-				food_x = rand() % L + 1;
-			} while (field[food_x] != field_symbol);
-			food_flag = true;
-		}
-
-		if (snake_x[0] == food_x)
-		{
-			snake_size++;
-			if (snake_size == L)
-			{
-				std::cout << "Game over!\n";
-				return 0;
-			}
-			food_flag = false;
-		}
-
-		for (int i = 1; i < columns - 1; i++)
-		{
-			field[i] = field_symbol;
-		}
-
-		field[food_x] = food_symbol;
-		for (int i = 0; i < snake_size; i++)
-		{
-			if (i == 0)
-			{
-				field[snake_x[i]] = head_symbol;
-			}
-			else
-			{
-				field[snake_x[i]] = tail_symbol;
-			}
-		}
-		Sleep(timeout);
-		Print(field, columns);
 	}
+#else
+	user_case = _getch();
+	if (user_case == 27)
+	{
+		game_on = false;
+	}
+	else if (user_case!=224)
+	{
+		std::cout << "Incorrect symbol";
+	}
+	else
+	{
+		user_case = _getch();
+	}
+#endif
+	
+	switch (user_case)
+	{
+	case DIRECTION::RIGHT_dir:
+		game_on = true;
+		break;
+	case DIRECTION::LEFT_dir:
+		game_on = true;
+		break;
+	default:
+		break;
+	}
+	
+	for (size_t i = snake_size-1; i < 0; i--)
+	{
+		snake_x[i] = snake_x[i - 1];
+	}
+
+	if (user_case==DIRECTION::RIGHT_dir)
+	{
+		snake_x[0]++;
+		if (snake_x[0]>=columns-1)
+		{
+			snake_x[0] = 1;
+		}
+	}
+	
+	if (user_case==DIRECTION::LEFT_dir)
+	{
+		snake_x[0]--;
+		if (snake_x[0]<1)
+		{
+			snake_x[0] = columns - 1;
+		}
+	}
+	
+	if (!food_flag)
+	{
+		do
+		{
+			food_x = rand() % L + 1;
+		} while (field[food_x] != field_symbol);
+		food_flag = true;
+	}
+	
+	if (snake_x[0] == food_x)
+	{
+		snake_size++;
+		if (snake_size == L)
+		{
+			std::cout << "Game over!\n";
+			return 0;
+		} 
+		food_flag = false;
+	}
+
+	for (int i = 1; i < columns - 1; i++)
+	{
+		field[i] = field_symbol;
+	}
+
+	field[food_x] = food_symbol;
+	for (int i = 0; i < snake_size; i++)
+	{
+		if (i == 0)
+		{
+			field[snake_x[i]] = head_symbol;
+		}
+		else
+		{
+			field[snake_x[i]] = tail_symbol;
+		}
+	}
+	Sleep(timeout);
+	Print(field, columns);
+	
 	return 0;
 }
