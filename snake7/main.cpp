@@ -3,6 +3,7 @@
 #include "food.h"
 #include "game.h"
 #include "snake.h"
+#include "winconsole.h"
 
 #include <windows.h>
 #include <iostream>
@@ -10,7 +11,7 @@
 #include <ctime>
 
 
-#define AUTOMATIC
+//#define AUTOMATIC
 
 int main() {
 
@@ -36,14 +37,8 @@ int main() {
 	keyboard_scan(direction_m, game_on_m);
 	while (game_on_m)
 	{
-#ifdef AUTOMATIC
-		if (_kbhit())
-#endif
-		{
-			keyboard_scan(direction_m, game_on_m);
-		}
-		Sleep(timeout_m);
-		system("cls");
+
+		setCursorPosition(0, 0);
 		check_eating(snake_x_m, snake_y_m, food_flag_m, food_x_m, food_y_m);
 		generate_food(food_flag_m, food_x_m, food_y_m, snake_x_m, snake_y_m, snake_size_m);
 		grow_snake(food_flag_m, snake_size_m);
@@ -55,7 +50,12 @@ int main() {
 		set_snake(field_m, snake_x_m, snake_y_m, snake_size_m);
 		print_field(field_m);
 		
-		std::cout << "QUIT: ESC\tLEFT: <\tRIGHT: >\tUP: ^\tDOWN: v\n";
-		
+#ifdef AUTOMATIC
+		if (_kbhit())
+#endif
+		{
+			keyboard_scan(direction_m, game_on_m);
+		}
+		Sleep(timeout_m);
 	}
 }

@@ -3,6 +3,7 @@
 #include "food.h"
 #include "game.h"
 #include "snake.h"
+#include "winconsole.h"
 
 #include <windows.h>
 #include <iostream>
@@ -36,7 +37,7 @@ int main() {
 	keyboard_scan(direction_m, game_on_m);
 	while (game_on_m)
 	{
-		system("cls");
+		setCursorPosition(0, 0);
 		check_eating(snake_x_m, food_flag_m, food_x_m);
 		generate_food(food_flag_m, food_x_m, snake_x_m, snake_size_m);
 		grow_snake(food_flag_m, snake_size_m);
@@ -47,8 +48,6 @@ int main() {
 		set_food(field_m, food_x_m);
 		set_snake(field_m, snake_x_m, snake_size_m);
 		print_field(field_m);
-
-		std::cout << "QUIT: ESC\tLEFT: <\tRIGHT: >\tUP: ^\tDOWN: v\n";
 
 #ifdef AUTOMATIC
 		if (_kbhit())
