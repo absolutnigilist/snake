@@ -188,8 +188,6 @@ void move_snake_struct(SNAKE& mysnake, const FIELD& field) {
         mysnake.snake_y[0]--;
     }
 }
-
-
 void grow_snake_struct(const FOOD& fd, SNAKE& mysnake) {
     if (!fd.food_flag) 
     {
